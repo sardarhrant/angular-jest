@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'test-jest';
+  title = 'AngularJestSetUp';
+
+  sum(a: number, b: number): number {
+    return a + b;
+  }
 }

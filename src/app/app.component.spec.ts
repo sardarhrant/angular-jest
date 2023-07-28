@@ -1,29 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+  let fixture: AppComponent;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = new AppComponent();
   });
 
-  it(`should have as title 'test-jest'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('test-jest');
+  it('should have a title AngularJestSetUp', () => {
+    expect(fixture.title).toEqual('AngularJestSetUp');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('test-jest app is running!');
+  it('adds 1 + 2 to equal 3', () => {
+    expect(fixture.sum(1, 2)).toBe(3);
   });
 });
