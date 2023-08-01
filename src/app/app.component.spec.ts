@@ -11,26 +11,26 @@ describe('AppComponent', () => {
     expect(fixture.title).toEqual('AngularJestSetUp');
   });
 
-  it('adds 1 + 2 to equal 3', () => {
-    expect(fixture.sum(1, 2)).toBe(3);
+  describe('Exceptions', () => {
+    // Exceptions
+    it('should throw an error', () => {
+      expect(() => fixture.compileAndroidCode()).toThrow();
+    });
+
+    it('should throw an error', () => {
+      expect(() => fixture.compileAndroidCode()).toThrow(Error);
+    });
+
+    it('should throw an error', () => {
+      expect(() => fixture.compileAndroidCode()).toThrow(
+        'you are using old Angular'
+      );
+    });
+
+    it('should throw an error', () => {
+      expect(() => fixture.compileAndroidCode()).toThrow(/Angular/);
+    });
   });
 
-  // Exceptions
-  it('should throw an error', () => {
-    expect(() => fixture.compileAndroidCode()).toThrow();
-  });
-
-  it('should throw an error', () => {
-    expect(() => fixture.compileAndroidCode()).toThrow(Error);
-  });
-
-  it('should throw an error', () => {
-    expect(() => fixture.compileAndroidCode()).toThrow(
-      'you are using old Angular'
-    );
-  });
-
-  it('should throw an error', () => {
-    expect(() => fixture.compileAndroidCode()).toThrow(/Angular/);
-  });
+  describe('HttpClients/Observables', () => {});
 });

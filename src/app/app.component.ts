@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AngularJestSetUp';
-
-  sum(a: number, b: number): number {
-    return a + b;
-  }
 
   compileAndroidCode() {
     throw new Error('you are using old Angular');
