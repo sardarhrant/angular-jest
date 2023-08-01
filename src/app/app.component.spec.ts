@@ -31,6 +31,4 @@ describe('AppComponent', () => {
       expect(() => fixture.compileAndroidCode()).toThrow(/Angular/);
     });
   });
-
-  describe('HttpClients/Observables', () => {});
 });
