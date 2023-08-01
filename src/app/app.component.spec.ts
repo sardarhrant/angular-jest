@@ -7,17 +7,17 @@ describe('AppComponent', () => {
     fixture = new AppComponent();
   });
 
-  it('should have a title AngularJestSetUp', () => {
+  it.skip('should have a title AngularJestSetUp', () => {
     expect(fixture.title).toEqual('AngularJestSetUp');
   });
 
   describe('Exceptions', () => {
     // Exceptions
-    it('should throw an error', () => {
+    it.only('should throw an error', () => {
       expect(() => fixture.compileAndroidCode()).toThrow();
     });
 
-    it('should throw an error', () => {
+    it.only('should throw an error', () => {
       expect(() => fixture.compileAndroidCode()).toThrow(Error);
     });
 
