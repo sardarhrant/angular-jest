@@ -34,6 +34,12 @@ export class PlaceholderService {
     return this.http.post(data, url, httpOptions);
   }
 
+  getUsers(): Observable<any> {
+    const url = 'https://dummyjson.com/users';
+
+    return this.http.get(url);
+  }
+
   private handleError<T>(operation = 'operation') {
     return (error: HttpErrorResponse): Observable<T> => {
       console.error(error);

@@ -1,0 +1,10 @@
+<div style="margin-top: 20px">
+  <input (keyup)="searchUser($event)" placeholder="Search User" />
+</div>
+<ul *ngIf="users?.length">
+  <li *ngFor="let user of users">
+    <span [highlighter]="searchTerm">
+      {{ user.firstName }} - {{ user.lastName }}
+    </span>
+  </li>
+</ul>
