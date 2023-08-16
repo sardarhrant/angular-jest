@@ -1,3 +1,13 @@
 <app-card></app-card>
 <app-users></app-users>
+
+<input
+  #users
+  id="github-users"
+  (input)="getGithubUsers($event)"
+  type="text"
+  placeholder="Get github users"
+/>
+
+<div #ajaxResponse></div>
 <router-outlet></router-outlet>
