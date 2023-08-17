@@ -10,7 +10,7 @@ import {
 import { AppComponent } from './app.component';
 import { cold } from 'jest-marbles';
 import { TestScheduler } from 'rxjs/testing';
-import { concat, from, of, throwError } from 'rxjs';
+import { concat, from, interval, of, throwError } from 'rxjs';
 import { breweryTypeahead } from './app.component';
 
 describe('AppComponent', () => {
@@ -96,7 +96,7 @@ describe('AppComponent', () => {
   });
 });
 
-describe.only('Marble testing in RxJS', () => {
+describe('Marble testing in RxJS', () => {
   let testScheduler: TestScheduler;
 
   beforeEach(() => {
@@ -261,6 +261,30 @@ describe.only('Marble testing in RxJS', () => {
 
       const expected = '';
       expectObservable(final$).toBe(expected);
+    });
+  });
+
+  it('throw error', () => {
+    const testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
+    testScheduler.run(({ expectObservable }) => {
+      const obj = {
+        firstName: 'Hrant',
+        lastName: 'Sardaryan',
+      };
+
+      const source$ = interval(100).pipe(
+        mergeMap((value) => {
+          if (value > 0) {
+            return throwError('error');
+          }
+          return of(value);
+        })
+      );
+      const expected = '100ms 0 99ms #';
+      expectObservable(source$).toBe(expected, [0]);
     });
   });
 });
