@@ -6,6 +6,7 @@ import {
   mergeMap,
   switchMap,
   take,
+  toArray,
 } from 'rxjs/operators';
 import { AppComponent } from './app.component';
 import { cold } from 'jest-marbles';
@@ -285,6 +286,78 @@ describe('Marble testing in RxJS', () => {
       );
       const expected = '100ms 0 99ms #';
       expectObservable(source$).toBe(expected, [0]);
+    });
+  });
+
+  it('should let you test snapshots of stream that do not complete', () => {
+    testScheduler.run((helpers) => {
+      const { expectObservable } = helpers;
+      const source$ = interval(1000).pipe(map((value) => `${value + 1}sec`));
+      const expected = '1s a 999ms b 999ms c';
+      const unsubscribe = '4s !';
+
+      expectObservable(source$, unsubscribe).toBe(expected, {
+        a: '1sec',
+        b: '2sec',
+        c: '3sec',
+      });
+    });
+  });
+});
+
+describe('subscribe & assert testing in RxJS', () => {
+  let testScheduler: TestScheduler;
+
+  beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  it('should compare each emitted value', () => {
+    testScheduler.run((helpers) => {
+      const source$ = of(1, 2, 3);
+      const final$ = source$.pipe(map((val) => val * 10));
+
+      const expected = [10, 20, 30];
+      let index = 0;
+
+      final$.subscribe((val) => {
+        expect(val).toBe(expected[index]);
+        index++;
+      });
+    });
+  });
+
+  it('should let you test async operations with done callback', (done) => {
+    const source$ = of('Ready', 'Set', 'Go').pipe(
+      mergeMap((message, index) => of(message).pipe(delay(index * 1000)))
+    );
+    const expected = ['Ready', 'Set', 'Go'];
+    let index = 0;
+
+    source$.subscribe(
+      (val) => {
+        expect(val).toEqual(expected[index]);
+        index++;
+      },
+      null,
+      done
+    );
+  });
+
+  it('should compare emitted values on completion with toArray', () => {
+    testScheduler.run((helpers) => {
+      const source$ = of(1, 2, 3);
+      const final$ = source$.pipe(
+        map((val) => val * 10),
+        toArray()
+      );
+
+      const expected = [10, 20, 30];
+      final$.subscribe((val) => {
+        expect(val).toStrictEqual(expected);
+      });
     });
   });
 });
